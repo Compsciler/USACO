@@ -15,26 +15,35 @@ class namenum {
         int letterCount = 0;
         for (int i = 'A'; i <= 'Y'; i++) {
             if (i != 'Q') {
-                letterMaps.put((char) i, (letterCount + 2) / 3);
+                letterMaps.put((char)i, letterCount / 3 + 2);
                 letterCount++;
             }
         }
         String serialString = f.readLine();
         int serialLength = serialString.length();
         String name = "";
-        while (name != null) {
+        boolean hasValidName = false;
+        
+        outerLoop:
+        while (true) {
             name = dict.readLine();
+            if (name == null){
+                break;
+            }
             if (name.length() != serialLength) {
                 continue;
             }
             for (int i = 0; i < name.length(); i++) {
-                if (letterMaps.get(name.charAt(i)) != (serialString.charAt(i) - '0')) {
-                    continue;
+                if (!letterMaps.containsKey(name.charAt(i)) || letterMaps.get(name.charAt(i)) != (serialString.charAt(i) - '0')) {
+                    continue outerLoop;
                 }
             }
             out.println(name);
+            hasValidName = true;
         }
-
+        if (!hasValidName){
+            out.println("NONE");
+        }
         out.close();
     }
 }

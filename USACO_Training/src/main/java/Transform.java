@@ -12,18 +12,18 @@ class transform {
         BufferedReader f = new BufferedReader(new FileReader("transform.in"));
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("transform.out")));
         int patternSize = Integer.parseInt(f.readLine());
-        int[][] oldPattern = new int[patternSize][patternSize];
+        char[][] oldPattern = new char[patternSize][patternSize];
         for (int i = 0; i < patternSize; i++){
             for (int j = 0; j < patternSize; j++) {
-                oldPattern[i][j] = f.read();
+                oldPattern[i][j] = (char)f.read();
             }
             f.readLine();
         }
-        int[][] patternClone = clone2D(oldPattern);
-        int[][] newPattern = new int[patternSize][patternSize];
+        char[][] patternClone = clone2D(oldPattern);
+        char[][] newPattern = new char[patternSize][patternSize];
         for (int i = 0; i < patternSize; i++){
             for (int j = 0; j < patternSize; j++) {
-                newPattern[i][j] = f.read();
+                newPattern[i][j] = (char)f.read();
             }
             f.readLine();
         }
@@ -55,13 +55,13 @@ class transform {
         
         out.close();
     }
-    public static void rotate90(int[][] matrix) {
+    public static void rotate90(char[][] matrix) {
         int size = matrix.length;
         for (int i = 0; i < size / 2; i++){
             for (int j = i; j < size - i - 1; j++){
-                int temp1 = matrix[i][j];
-                int temp2 = matrix[j][size - i - 1];
-                int temp3 = matrix[size - i - 1][size - j - 1];
+                char temp1 = matrix[i][j];
+                char temp2 = matrix[j][size - i - 1];
+                char temp3 = matrix[size - i - 1][size - j - 1];
                 matrix[i][j] = matrix[size - j - 1][i];
                 matrix[size - j - 1][i] = temp3;
                 matrix[size - i - 1][size - j - 1] = temp2;
@@ -69,18 +69,18 @@ class transform {
             }
         }
     }
-    public static void reflectX(int[][] matrix){  // For square matrices
+    public static void reflectX(char[][] matrix){  // For square matrices
         int size = matrix.length;
-        for (int i = 0; i < size / 2; i++){
-            for (int j = i; j < size; j++){
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[i][size - i - 1];
-                matrix[size - i - 1][i] = temp;
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size / 2; j++){
+                char temp = matrix[i][j];
+                matrix[i][j] = matrix[i][size - j - 1];
+                matrix[i][size - j - 1] = temp;
             }
         }
     }
-    public static int[][] clone2D(int[][] matrix){
-        int[][] res = new int[matrix.length][matrix[0].length];
+    public static char[][] clone2D(char[][] matrix){
+        char[][] res = new char[matrix.length][matrix[0].length];
         for (int i = 0; i < matrix.length; i++){
             res[i] = matrix[i].clone();
         }
